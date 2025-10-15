@@ -140,6 +140,15 @@ function FeedPlayer({
     }
   }, [showMemberSenseOverlay]);
 
+  // Sync URL hash with MemberSense overlay state
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    if (!showMemberSenseOverlay && window.location.hash === "#members=discord") {
+      const { pathname, search } = window.location;
+      window.history.replaceState(null, "", pathname + search);
+    }
+  }, [showMemberSenseOverlay]);
 
   const imageDuration = 4;
   const pageDuration = 10; // Pages last 10 seconds
